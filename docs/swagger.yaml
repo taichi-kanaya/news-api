@@ -1,0 +1,37 @@
+info:
+  contact: {}
+  description: 最新のニュースを取得するAPIです
+  license:
+    name: taichi kanaya
+  title: NewsAPI
+  version: "1.0"
+paths:
+  /news-api:
+    get:
+      description: NewsAPIの記事を取得する( https://newsapi.org/docs/endpoints/everything
+        のエンドポイントを使用します)
+      parameters:
+      - description: query
+        in: query
+        name: query
+        required: true
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: NewsAPIの記事情報を返します
+          schema:
+            type: string
+        "400":
+          description: バリデーションエラーメッセージを返します
+          schema:
+            type: string
+      summary: NewsAPIの記事を取得する
+      tags:
+      - news-api
+swagger: "2.0"

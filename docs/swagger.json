@@ -1,0 +1,55 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "最新のニュースを取得するAPIです",
+        "title": "NewsAPI",
+        "contact": {},
+        "license": {
+            "name": "taichi kanaya"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/news-api": {
+            "get": {
+                "description": "NewsAPIの記事を取得する( https://newsapi.org/docs/endpoints/everything のエンドポイントを使用します)",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news-api"
+                ],
+                "summary": "NewsAPIの記事を取得する",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "query",
+                        "name": "query",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "NewsAPIの記事情報を返します",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "バリデーションエラーメッセージを返します",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
