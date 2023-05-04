@@ -32,22 +32,101 @@
                         "type": "integer",
                         "description": "page",
                         "name": "page",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "pageSize",
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "NewsAPIの記事情報を返します",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/controller.NewsAPIResonse"
                         }
                     },
                     "400": {
                         "description": "バリデーションエラーメッセージを返します",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/controller.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "システムエラーメッセージを返します",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ErrorResponse"
                         }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controller.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "errors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "controller.NewsAPIResonse": {
+            "type": "object",
+            "properties": {
+                "articles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/news_api.Article"
+                    }
+                },
+                "totalResults": {
+                    "type": "integer"
+                }
+            }
+        },
+        "news_api.Article": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "publishedAt": {
+                    "type": "string"
+                },
+                "source": {
+                    "$ref": "#/definitions/news_api.ArticleSource"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "urlToImage": {
+                    "type": "string"
+                }
+            }
+        },
+        "news_api.ArticleSource": {
+            "type": "object",
+            "properties": {
+                "id": {},
+                "name": {
+                    "type": "string"
                 }
             }
         }

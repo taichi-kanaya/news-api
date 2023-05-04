@@ -1,3 +1,45 @@
+definitions:
+  controller.ErrorResponse:
+    properties:
+      errors:
+        items:
+          type: string
+        type: array
+    type: object
+  controller.NewsAPIResonse:
+    properties:
+      articles:
+        items:
+          $ref: '#/definitions/news_api.Article'
+        type: array
+      totalResults:
+        type: integer
+    type: object
+  news_api.Article:
+    properties:
+      author:
+        type: string
+      content:
+        type: string
+      description:
+        type: string
+      publishedAt:
+        type: string
+      source:
+        $ref: '#/definitions/news_api.ArticleSource'
+      title:
+        type: string
+      url:
+        type: string
+      urlToImage:
+        type: string
+    type: object
+  news_api.ArticleSource:
+    properties:
+      id: {}
+      name:
+        type: string
+    type: object
 info:
   contact: {}
   description: 最新のニュースを取得するAPIです
@@ -19,6 +61,12 @@ paths:
       - description: page
         in: query
         name: page
+        required: true
+        type: integer
+      - description: pageSize
+        in: query
+        name: pageSize
+        required: true
         type: integer
       produces:
       - application/json
@@ -26,11 +74,15 @@ paths:
         "200":
           description: NewsAPIの記事情報を返します
           schema:
-            type: string
+            $ref: '#/definitions/controller.NewsAPIResonse'
         "400":
           description: バリデーションエラーメッセージを返します
           schema:
-            type: string
+            $ref: '#/definitions/controller.ErrorResponse'
+        "500":
+          description: システムエラーメッセージを返します
+          schema:
+            $ref: '#/definitions/controller.ErrorResponse'
       summary: NewsAPIの記事を取得する
       tags:
       - news-api

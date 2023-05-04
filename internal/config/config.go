@@ -2,6 +2,14 @@ package config
 
 import "os"
 
+func GetAppEnv() string {
+	env := os.Getenv("APP_ENV")
+	if env == "" {
+		panic("Not found APP_ENV")
+	}
+	return env
+}
+
 func GetNewsAPIKey() string {
 	newsApiKey := os.Getenv("NEWS_API_KEY")
 	if newsApiKey == "" {

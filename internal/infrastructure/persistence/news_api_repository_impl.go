@@ -21,6 +21,7 @@ func NewNewsAPIRepositoryImpl(externalApi *api_client.ExternalClient) repositori
 func (n *NewsAPIRepositoryImpl) GetEverything(
 	query string,
 	page int,
+	pageSize int,
 ) (*news_api.Everything, error) {
 	headers := map[string][]string{
 		"X-Api-Key": {config.GetNewsAPIKey()},
@@ -29,7 +30,7 @@ func (n *NewsAPIRepositoryImpl) GetEverything(
 		"q":        query,
 		"page":     strconv.Itoa(page),
 		"language": "jp",
-		"pageSize": "3",
+		"pageSize": strconv.Itoa(pageSize),
 	}
 	everything := &news_api.Everything{}
 	err := n.externalApi.Get(

@@ -13,6 +13,6 @@ func NewNewsApiService(repository repositories.NewsAPIRepository) *NewsApiServic
 	return &NewsApiService{repository: repository}
 }
 
-func (service *NewsApiService) GetEverything(query string, page int) (*news_api.Everything, error) {
-	return service.repository.GetEverything(query, page)
+func (service *NewsApiService) GetEverything(query string, page int, pageSize int) (*news_api.Everything, error) {
+	return service.repository.GetEverything(query, page, pageSize)
 }

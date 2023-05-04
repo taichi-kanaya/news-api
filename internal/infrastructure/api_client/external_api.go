@@ -44,7 +44,7 @@ func (c *ExternalClient) Get(
 		)
 		return domain.NewCustomError(
 			http.StatusInternalServerError,
-			config.ERROR_MESSAGE_500,
+			[]string{config.ERROR_MESSAGE_500},
 		)
 	}
 
@@ -61,7 +61,7 @@ func (c *ExternalClient) Get(
 		)
 		return domain.NewCustomError(
 			http.StatusInternalServerError,
-			config.ERROR_MESSAGE_500,
+			[]string{config.ERROR_MESSAGE_500},
 		)
 	}
 	defer res.Body.Close()
@@ -74,7 +74,7 @@ func (c *ExternalClient) Get(
 		)
 		return domain.NewCustomError(
 			http.StatusInternalServerError,
-			config.ERROR_MESSAGE_500,
+			[]string{config.ERROR_MESSAGE_500},
 		)
 	}
 
@@ -85,7 +85,7 @@ func (c *ExternalClient) Get(
 		)
 		return domain.NewCustomError(
 			http.StatusInternalServerError,
-			config.ERROR_MESSAGE_500,
+			[]string{config.ERROR_MESSAGE_500},
 		)
 	}
 
@@ -97,7 +97,7 @@ func (c *ExternalClient) Get(
 		)
 		return domain.NewCustomError(
 			http.StatusInternalServerError,
-			config.ERROR_MESSAGE_500,
+			[]string{config.ERROR_MESSAGE_500},
 		)
 	}
 

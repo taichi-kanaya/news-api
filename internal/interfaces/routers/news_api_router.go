@@ -1,13 +1,12 @@
 package routers
 
 import (
-	"net/http"
-	"news-api/internal/domain"
 	"news-api/internal/domain/services"
 	"news-api/internal/domain/usecases"
 	"news-api/internal/infrastructure/api_client"
 	"news-api/internal/infrastructure/persistence"
 	"news-api/internal/interfaces/controller"
+	"news-api/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,24 +19,16 @@ const newsAPIBaseURL = "https://newsapi.org"
 // @tags		news-api
 // @produce		json
 // @param		query query string true "query"
-// @param		page query int false "page"
-// @success 200 {object} string "NewsAPIの記事情報を返します"
-// @failure 400 {object} string "バリデーションエラーメッセージを返します"
+// @param		page query int true "page"
+// @param		pageSize query int true "pageSize"
+// @success 200 {object} controller.NewsAPIResonse "NewsAPIの記事情報を返します"
+// @failure 400 {object} controller.ErrorResponse "バリデーションエラーメッセージを返します"
+// @failure 500 {object} controller.ErrorResponse "システムエラーメッセージを返します"
 // @router		/news-api [get]
 func setNewsAPIRouter(router *gin.Engine) {
 	router.GET("/news-api", func(c *gin.Context) {
-		res, err := getController().GetEverything(c)
-		httpStatusCode := http.StatusOK
-		data := map[string]any{
-			"data": res,
-		}
-		if err != nil {
-			httpStatusCode = err.(*domain.CustomError).HttpStatusCode
-			data = map[string]any{
-				"error": err.(*domain.CustomError).Message,
-			}
-		}
-		c.JSON(httpStatusCode, gin.H(data))
+		httpStatusCode, data := getController().GetEverything(c)
+		c.JSON(httpStatusCode, gin.H(utils.StructToMap(data)))
 	})
 }
 

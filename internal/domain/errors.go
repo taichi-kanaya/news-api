@@ -1,22 +1,24 @@
 package domain
 
+import "strings"
+
 type CustomError struct {
 	HttpStatusCode int
-	Message        string
+	Messages       []string
 }
 
 func (e *CustomError) Error() string {
-	return e.Message
+	return strings.Join(e.Messages, ",")
 }
 
 // カスタムエラーを生成する
 func NewCustomError(
 	httpStatusCode int,
-	message string,
+	messages []string,
 ) error {
 	return &CustomError{
 		HttpStatusCode: httpStatusCode,
-		Message:        message,
+		Messages:       messages,
 	}
 }
 

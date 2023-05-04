@@ -4,6 +4,7 @@ import (
 	"log"
 	"news-api/internal/config"
 	"news-api/internal/interfaces/routers"
+	"strconv"
 	"time"
 
 	"github.com/getsentry/sentry-go"
@@ -20,9 +21,13 @@ func main() {
 
 // Sentryクライアントの初期設定
 func sentryInit() {
+	const appVersion = 1.0
 	err := sentry.Init(sentry.ClientOptions{
 		Dsn:              config.GetSentryDsn(),
 		TracesSampleRate: 1.0,
+		SendDefaultPII:   true,
+		Release:          strconv.Itoa(appVersion),
+		Environment:      config.GetAppEnv(),
 	})
 	if err != nil {
 		log.Fatalf("sentry.Init: %s", err)
