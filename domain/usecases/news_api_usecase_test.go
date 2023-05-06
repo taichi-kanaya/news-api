@@ -1,7 +1,7 @@
 package usecases
 
 import (
-	"news-api/internal/domain/entities/newsapi"
+	"news-api/domain/entities/newsapi"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"news-api/internal/config"
-	"news-api/internal/domain"
+	"news-api/config"
+	"news-api/domain"
 )
 
 type ExternalAPIInterface interface {

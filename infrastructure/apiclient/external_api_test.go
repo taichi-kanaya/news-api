@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"news-api/internal/config"
-	"news-api/internal/domain/entities/newsapi"
+	"news-api/config"
+	"news-api/domain/entities/newsapi"
 	"strings"
 	"testing"
 

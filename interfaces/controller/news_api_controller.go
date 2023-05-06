@@ -3,9 +3,9 @@ package controller
 import (
 	"fmt"
 	"net/http"
-	"news-api/internal/domain"
-	"news-api/internal/domain/entities/newsapi"
-	"news-api/internal/domain/usecases"
+	"news-api/domain"
+	"news-api/domain/entities/newsapi"
+	"news-api/domain/usecases"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

@@ -1,8 +1,8 @@
 package services
 
 import (
-	"news-api/internal/domain/entities/newsapi"
-	"news-api/internal/domain/repositories"
+	"news-api/domain/entities/newsapi"
+	"news-api/domain/repositories"
 )
 
 type NewsApiServiceInterface interface {

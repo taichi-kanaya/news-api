@@ -3,7 +3,7 @@ package persistence
 import (
 	"errors"
 	"net/http"
-	"news-api/internal/domain/entities/newsapi"
+	"news-api/domain/entities/newsapi"
 	"os"
 	"strconv"
 	"testing"

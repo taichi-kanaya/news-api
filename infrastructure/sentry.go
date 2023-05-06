@@ -1,7 +1,7 @@
 package infrastructure
 
 import (
-	"news-api/internal/domain"
+	"news-api/domain"
 	"time"
 
 	"github.com/getsentry/sentry-go"

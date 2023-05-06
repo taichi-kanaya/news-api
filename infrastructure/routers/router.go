@@ -3,8 +3,8 @@ package routers
 import (
 	"fmt"
 	"net/http"
-	"news-api/internal/config"
-	"news-api/internal/infrastructure/validation"
+	"news-api/config"
+	"news-api/infrastructure/validation"
 	"time"
 
 	"github.com/getsentry/sentry-go"

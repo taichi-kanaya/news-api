@@ -3,10 +3,10 @@ package controller
 import (
 	"net/http"
 	"net/http/httptest"
-	"news-api/internal/config"
-	"news-api/internal/domain"
-	"news-api/internal/domain/entities/newsapi"
-	"news-api/internal/infrastructure/validation"
+	"news-api/config"
+	"news-api/domain"
+	"news-api/domain/entities/newsapi"
+	"news-api/infrastructure/validation"
 	"testing"
 
 	"github.com/gin-gonic/gin"

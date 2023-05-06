@@ -1,10 +1,10 @@
 package persistence
 
 import (
-	"news-api/internal/config"
-	"news-api/internal/domain/entities/newsapi"
-	"news-api/internal/domain/repositories"
-	"news-api/internal/infrastructure/apiclient"
+	"news-api/config"
+	"news-api/domain/entities/newsapi"
+	"news-api/domain/repositories"
+	"news-api/infrastructure/apiclient"
 	"strconv"
 )
 

@@ -2,8 +2,8 @@ package main
 
 import (
 	"log"
-	"news-api/internal/config"
-	"news-api/internal/infrastructure/routers"
+	"news-api/config"
+	"news-api/infrastructure/routers"
 	"strconv"
 	"time"
 

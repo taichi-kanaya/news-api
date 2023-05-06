@@ -1,13 +1,13 @@
 package routers
 
 import (
-	"news-api/internal/domain/services"
-	"news-api/internal/domain/usecases"
-	"news-api/internal/infrastructure"
-	"news-api/internal/infrastructure/apiclient"
-	"news-api/internal/infrastructure/persistence"
-	"news-api/internal/interfaces/controller"
-	"news-api/internal/utils"
+	"news-api/domain/services"
+	"news-api/domain/usecases"
+	"news-api/infrastructure"
+	"news-api/infrastructure/apiclient"
+	"news-api/infrastructure/persistence"
+	"news-api/interfaces/controller"
+	"news-api/utils"
 
 	"github.com/gin-gonic/gin"
 )

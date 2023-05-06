@@ -1,8 +1,8 @@
 package usecases
 
 import (
-	"news-api/internal/domain/entities/newsapi"
-	"news-api/internal/domain/services"
+	"news-api/domain/entities/newsapi"
+	"news-api/domain/services"
 )
 
 type NewsApiUsecaseInterface interface {
