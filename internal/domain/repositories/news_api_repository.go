@@ -1,7 +1,7 @@
 package repositories
 
-import "news-api/internal/domain/entities/news_api"
+import "news-api/internal/domain/entities/newsapi"
 
-type NewsAPIRepository interface {
-	GetEverything(query string, page int, pageSize int) (*news_api.Everything, error)
+type NewsAPIRepositoryInterface interface {
+	GetEverything(query string, page int, pageSize int) (*newsapi.Everything, error)
 }

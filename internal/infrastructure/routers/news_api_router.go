@@ -3,7 +3,8 @@ package routers
 import (
 	"news-api/internal/domain/services"
 	"news-api/internal/domain/usecases"
-	"news-api/internal/infrastructure/api_client"
+	"news-api/internal/infrastructure"
+	"news-api/internal/infrastructure/apiclient"
 	"news-api/internal/infrastructure/persistence"
 	"news-api/internal/interfaces/controller"
 	"news-api/internal/utils"
@@ -33,7 +34,11 @@ func setNewsAPIRouter(router *gin.Engine) {
 }
 
 func getController() *controller.NewsAPIController {
-	externalAPIClient := api_client.NewExternalClient(newsAPIBaseURL)
+	externalAPIClient := apiclient.NewExternalClient(
+		newsAPIBaseURL,
+		infrastructure.NewSentryErrorHandler(),
+		apiclient.NewHTTPClient(),
+	)
 	newsAPIRepository := persistence.NewNewsAPIRepositoryImpl(externalAPIClient)
 	newsAPIService := services.NewNewsApiService(newsAPIRepository)
 	newsAPIUsecase := usecases.NewNewsApiUsecase(newsAPIService)

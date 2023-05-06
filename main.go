@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"news-api/internal/config"
-	"news-api/internal/interfaces/routers"
+	"news-api/internal/infrastructure/routers"
 	"strconv"
 	"time"
 

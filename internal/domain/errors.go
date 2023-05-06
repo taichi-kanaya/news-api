@@ -1,6 +1,9 @@
 package domain
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type CustomError struct {
 	HttpStatusCode int
@@ -8,7 +11,7 @@ type CustomError struct {
 }
 
 func (e *CustomError) Error() string {
-	return strings.Join(e.Messages, ",")
+	return fmt.Sprintf("%d:%s", e.HttpStatusCode, strings.Join(e.Messages, ","))
 }
 
 // カスタムエラーを生成する

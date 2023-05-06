@@ -1,18 +1,22 @@
 package services
 
 import (
-	"news-api/internal/domain/entities/news_api"
+	"news-api/internal/domain/entities/newsapi"
 	"news-api/internal/domain/repositories"
 )
 
-type NewsApiService struct {
-	repository repositories.NewsAPIRepository
+type NewsApiServiceInterface interface {
+	GetEverything(query string, page int, pageSize int) (*newsapi.Everything, error)
 }
 
-func NewNewsApiService(repository repositories.NewsAPIRepository) *NewsApiService {
-	return &NewsApiService{repository: repository}
+type newsApiService struct {
+	repository repositories.NewsAPIRepositoryInterface
 }
 
-func (service *NewsApiService) GetEverything(query string, page int, pageSize int) (*news_api.Everything, error) {
+func NewNewsApiService(repository repositories.NewsAPIRepositoryInterface) NewsApiServiceInterface {
+	return &newsApiService{repository: repository}
+}
+
+func (service *newsApiService) GetEverything(query string, page int, pageSize int) (*newsapi.Everything, error) {
 	return service.repository.GetEverything(query, page, pageSize)
 }

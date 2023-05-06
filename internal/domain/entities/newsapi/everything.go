@@ -1,4 +1,4 @@
-package news_api
+package newsapi
 
 /*
  * NewsAPIの記事保存用モデル

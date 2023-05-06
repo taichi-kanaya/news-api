@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"news-api/internal/config"
+	"news-api/internal/infrastructure/validation"
 	"time"
 
 	"github.com/getsentry/sentry-go"
@@ -18,6 +19,9 @@ func SetRouters() {
 
 	// Swagger
 	setSwaggerRouter(router)
+
+	// Ginにカスタムバリデーション関数を登録
+	validation.RegisterValidation()
 
 	// NewsAPI
 	setNewsAPIRouter(router)

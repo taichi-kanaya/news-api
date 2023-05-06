@@ -1,4 +1,4 @@
-package api_client
+package apiclient
 
 import (
 	"encoding/json"
@@ -7,15 +7,52 @@ import (
 	"net/http"
 	"news-api/internal/config"
 	"news-api/internal/domain"
-	"news-api/internal/infrastructure"
 )
 
-type ExternalClient struct {
-	BaseURL string
+type ExternalAPIInterface interface {
+	Get(path string,
+		headers http.Header,
+		queryParams map[string]string,
+		response interface{},
+	) error
 }
 
-func NewExternalClient(baseURL string) *ExternalClient {
-	return &ExternalClient{BaseURL: baseURL}
+func NewExternalAPI(
+	baseURL string,
+	sentryErrorHandler domain.CustomErrorHandler,
+	Client HTTPClient,
+) ExternalAPIInterface {
+	return NewExternalClient(
+		baseURL,
+		sentryErrorHandler,
+		Client,
+	)
+}
+
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
+func NewHTTPClient() HTTPClient {
+	return &http.Client{}
+}
+
+type ExternalClient struct {
+	BaseURL            string
+	SentryErrorHandler domain.CustomErrorHandler
+	Client             HTTPClient
+}
+
+func NewExternalClient(
+	baseURL string,
+	sentryErrorHandler domain.CustomErrorHandler,
+	Client HTTPClient,
+) *ExternalClient {
+	return &ExternalClient{
+		BaseURL:            baseURL,
+		SentryErrorHandler: sentryErrorHandler,
+		Client:             Client,
+	}
 }
 
 // 外部APIのGETリクエストを実行する
@@ -39,7 +76,7 @@ func (c *ExternalClient) Get(
 	// HTTPリクエスト生成
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		infrastructure.NewSentryErrorHandler().SendSentry(
+		c.SentryErrorHandler.SendSentry(
 			fmt.Errorf("外部APIのGETリクエスト生成に失敗しました。url: %s", url),
 		)
 		return domain.NewCustomError(
@@ -54,9 +91,9 @@ func (c *ExternalClient) Get(
 	}
 
 	// 外部APIコール
-	res, err := http.DefaultClient.Do(req)
+	res, err := c.Client.Do(req)
 	if err != nil {
-		infrastructure.NewSentryErrorHandler().SendSentry(
+		c.SentryErrorHandler.SendSentry(
 			fmt.Errorf("外部APIのGETリクエスト実行に失敗しました。url: %s", url),
 		)
 		return domain.NewCustomError(
@@ -69,7 +106,7 @@ func (c *ExternalClient) Get(
 	// レスポンス読み込み
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		infrastructure.NewSentryErrorHandler().SendSentry(
+		c.SentryErrorHandler.SendSentry(
 			fmt.Errorf("外部APIのGETリクエストに対するレスポンス読み込みに失敗しました。url: %s, res.Body: %s", url, res.Body),
 		)
 		return domain.NewCustomError(
@@ -80,7 +117,7 @@ func (c *ExternalClient) Get(
 
 	// ステータスコードチェック
 	if res.StatusCode != http.StatusOK {
-		infrastructure.NewSentryErrorHandler().SendSentry(
+		c.SentryErrorHandler.SendSentry(
 			fmt.Errorf("外部APIのGETリクエストに対するレスポンスのHTTPステータスコードが正常系ではありません。url: %s, httpStatusCode: %d", url, res.StatusCode),
 		)
 		return domain.NewCustomError(
@@ -90,9 +127,8 @@ func (c *ExternalClient) Get(
 	}
 
 	// JSONパース
-	fmt.Println(string(body))
 	if err := json.Unmarshal(body, &response); err != nil {
-		infrastructure.NewSentryErrorHandler().SendSentry(
+		c.SentryErrorHandler.SendSentry(
 			fmt.Errorf("外部APIのGETリクエストに対するレスポンスのJSONパースに失敗しました。url: %s, body: %s", url, body),
 		)
 		return domain.NewCustomError(

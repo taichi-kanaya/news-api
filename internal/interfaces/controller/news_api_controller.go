@@ -4,34 +4,36 @@ import (
 	"fmt"
 	"net/http"
 	"news-api/internal/domain"
-	"news-api/internal/domain/entities/news_api"
+	"news-api/internal/domain/entities/newsapi"
 	"news-api/internal/domain/usecases"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"golang.org/x/exp/slices"
 )
 
 type NewsAPIController struct {
-	usecase *usecases.NewsApiUsecase
+	usecase usecases.NewsApiUsecaseInterface
 }
 
-func NewNewsAPIController(usecase *usecases.NewsApiUsecase) *NewsAPIController {
+func NewNewsAPIController(usecase usecases.NewsApiUsecaseInterface) *NewsAPIController {
 	return &NewsAPIController{usecase: usecase}
 }
 
+// ユーザに返すレスポンス
 type NewsAPIResonse struct {
-	TotalResults int                `json:"totalResults"`
-	Articles     []news_api.Article `json:"articles"`
+	TotalResults int               `json:"totalResults"`
+	Articles     []newsapi.Article `json:"articles"`
 }
 
+// HTTPリクエストパラメータ
 type RequestParam struct {
 	Query    string `form:"query" binding:"required,max=500"`
-	Page     string `form:"page" binding:"required,number,min=1"`
-	PageSize string `form:"pageSize" binding:"required,number,min=1"`
+	Page     string `form:"page" binding:"required,string-min-value=1"`
+	PageSize string `form:"pageSize" binding:"required,string-min-value=1"`
 }
 
+// HTTPリクエストを受け取り、NewsAPIから記事を取得する
 func (controller *NewsAPIController) GetEverything(c *gin.Context) (int, interface{}) {
 	// リクエストパラメータをバインド
 	var requestParam RequestParam
@@ -68,7 +70,6 @@ func bind(c *gin.Context, requestParam *RequestParam) error {
 
 			switch fieldName {
 			case "Query":
-				errorMessages[i] = fmt.Sprintf("queryを指定してください")
 				if tag == "required" {
 					errorMessages[i] = fmt.Sprintf("queryを指定してください")
 				} else if tag == "max" {
@@ -77,13 +78,13 @@ func bind(c *gin.Context, requestParam *RequestParam) error {
 			case "Page":
 				if tag == "required" {
 					errorMessages[i] = fmt.Sprintf("pageを指定してください")
-				} else if slices.Contains([]string{"number", "min"}, tag) {
+				} else if tag == "string-min-value" {
 					errorMessages[i] = fmt.Sprintf("pageには1以上の数値を指定してください")
 				}
 			case "PageSize":
 				if tag == "required" {
 					errorMessages[i] = fmt.Sprintf("pageSizeを指定してください")
-				} else if slices.Contains([]string{"number", "min"}, tag) {
+				} else if tag == "string-min-value" {
 					errorMessages[i] = fmt.Sprintf("pageSizeには1以上の数値を指定してください")
 				}
 			}
