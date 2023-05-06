@@ -1,3 +1,6 @@
+/*
+NewsAPIから記事を取得してユーザに返すコントローラ
+*/
 package controller
 
 import (
@@ -20,7 +23,7 @@ func NewNewsAPIController(usecase usecases.NewsApiUsecaseInterface) *NewsAPICont
 	return &NewsAPIController{usecase: usecase}
 }
 
-// ユーザに返すレスポンス
+// ユーザに返す正常時レスポンス
 type NewsAPIResonse struct {
 	TotalResults int               `json:"totalResults"`
 	Articles     []newsapi.Article `json:"articles"`
@@ -33,8 +36,15 @@ type RequestParam struct {
 	PageSize string `form:"pageSize" binding:"required,string-min-value=1"`
 }
 
-// HTTPリクエストを受け取り、NewsAPIから記事を取得する
-func (controller *NewsAPIController) GetEverything(c *gin.Context) (int, interface{}) {
+// NewsAPIから記事を取得してユーザに返す
+//
+// Parameters:
+//   - c: *gin.Context
+//
+// Returns:
+//   - int: HTTPステータスコード
+//   - interface{}: レスポンスボディ(NewsAPIResonse or ErrorResponse)
+func (newsAPIController *NewsAPIController) GetEverything(c *gin.Context) (int, interface{}) {
 	// リクエストパラメータをバインド
 	var requestParam RequestParam
 	if err := bind(c, &requestParam); err != nil {
@@ -46,7 +56,7 @@ func (controller *NewsAPIController) GetEverything(c *gin.Context) (int, interfa
 	// リクエストパラメータを元にNewsAPIから記事を取得
 	page, _ := strconv.Atoi(requestParam.Page)
 	pageSize, _ := strconv.Atoi(requestParam.PageSize)
-	everything, err := controller.usecase.GetEverything(requestParam.Query, page, pageSize)
+	everything, err := newsAPIController.usecase.GetEverything(requestParam.Query, page, pageSize)
 	if err != nil {
 		return err.(*domain.CustomError).HttpStatusCode, &ErrorResponse{
 			Errors: err.(*domain.CustomError).Messages,
@@ -60,6 +70,13 @@ func (controller *NewsAPIController) GetEverything(c *gin.Context) (int, interfa
 }
 
 // リクエストパラメータをバインドする
+//
+// Parameters:
+//   - c: *gin.Context
+//   - requestParam: *RequestParam
+//
+// Returns:
+//   - error: エラー情報
 func bind(c *gin.Context, requestParam *RequestParam) error {
 	if err := c.ShouldBind(&requestParam); err != nil {
 		validationErrors := err.(validator.ValidationErrors)

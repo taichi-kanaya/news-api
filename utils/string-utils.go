@@ -1,8 +1,17 @@
+/*
+プロジェクト全体で使用するユーティリティ関数群
+*/
 package utils
 
 import "reflect"
 
 // 構造体をマップに変換する
+//
+// Parameters:
+//   - obj: 構造体
+//
+// Returns:
+//   - map[string]interface{}: マップ
 func StructToMap(obj interface{}) map[string]interface{} {
 	v := reflect.ValueOf(obj)
 	if v.Kind() == reflect.Ptr {

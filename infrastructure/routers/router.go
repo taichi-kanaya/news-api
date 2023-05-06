@@ -1,16 +1,20 @@
+/*
+パッケージ routers は、ルーティングを設定するためのパッケージです
+*/
 package routers
 
 import (
 	"fmt"
 	"net/http"
 	"news-api/config"
-	"news-api/infrastructure/validation"
+	"news-api/validation"
 	"time"
 
 	"github.com/getsentry/sentry-go"
 	"github.com/gin-gonic/gin"
 )
 
+// ルーティングを設定する
 func SetRouters() {
 	router := gin.Default()
 

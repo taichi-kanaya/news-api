@@ -6,7 +6,7 @@ import (
 	"news-api/config"
 	"news-api/domain"
 	"news-api/domain/entities/newsapi"
-	"news-api/infrastructure/validation"
+	"news-api/validation"
 	"testing"
 
 	"github.com/gin-gonic/gin"

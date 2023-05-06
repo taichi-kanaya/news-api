@@ -20,6 +20,15 @@ func NewNewsAPIRepositoryImpl(
 
 // NewsAPIの記事を検索する
 // ref: https://newsapi.org/docs/endpoints/everything
+//
+// Parameters:
+//   - query: 検索クエリ
+//   - page: ページ番号
+//   - pageSize: 1ページあたりの記事数
+//
+// Returns:
+//   - *newsapi.Everything
+//   - error
 func (n *NewsAPIRepositoryImpl) GetEverything(
 	query string,
 	page int,

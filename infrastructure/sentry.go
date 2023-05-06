@@ -14,6 +14,12 @@ func NewSentryErrorHandler() domain.CustomErrorHandler {
 }
 
 // エラーログをSentryに送信する
+//
+// Parameters:
+//   - err: errorインタフェース
+//
+// Returns:
+//   - None
 func (seh *SentryErrorHandler) SendSentry(err error) {
 	if err != nil {
 		sentry.CaptureException(err)

@@ -1,3 +1,6 @@
+/*
+カスタムバリデーションのルールを定義する
+*/
 package validation
 
 import (
@@ -7,14 +10,21 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
+// Ginにカスタムバリデーションのルールを登録する
 func RegisterValidation() {
 	if v, isValidator := binding.Validator.Engine().(*validator.Validate); isValidator {
-		v.RegisterValidation("string-min-value", StringMinValue)
+		v.RegisterValidation("string-min-value", stringMinValue)
 	}
 }
 
-// string型のリクエストパラメータに数値の最小値を設定するためのバリデーションルール
-func StringMinValue(fl validator.FieldLevel) bool {
+// 文字列型の数字が指定された値以上かを判定するバリデーション
+//
+// Parameters:
+//   - fl: validator.FieldLevel (バリデーション対象のフィールド情報)
+//
+// Returns:
+//   - bool: バリデーション結果(true: OK, false: NG)
+func stringMinValue(fl validator.FieldLevel) bool {
 	// 許容する最小値を取得
 	minValue, err := strconv.ParseInt(fl.Param(), 10, 64)
 	if err != nil {

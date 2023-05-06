@@ -17,6 +17,16 @@ func NewNewsApiUsecase(service services.NewsApiServiceInterface) NewsApiUsecaseI
 	return &NewsApiUsecase{service: service}
 }
 
+// NewsAPIの記事を検索する
+//
+// Parameters:
+//   - query: 検索クエリ
+//   - page: ページ番号
+//   - pageSize: 1ページあたりの記事数
+//
+// Returns:
+//   - *newsapi.Everything
+//   - error
 func (usecase *NewsApiUsecase) GetEverything(query string, page int, pageSize int) (*newsapi.Everything, error) {
 	return usecase.service.GetEverything(query, page, pageSize)
 }

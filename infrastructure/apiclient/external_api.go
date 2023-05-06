@@ -56,6 +56,15 @@ func NewExternalClient(
 }
 
 // 外部APIのGETリクエストを実行する
+//
+// Parameters:
+//   - path: リクエストパス
+//   - headers: HTTPヘッダ
+//   - queryParams: URLクエリストリング
+//   - response: レスポンスの格納先
+//
+// Returns:
+//   - error
 func (c *ExternalClient) Get(
 	path string,
 	headers http.Header,
