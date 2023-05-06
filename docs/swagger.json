@@ -1,0 +1,134 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "最新のニュースを取得するAPIです",
+        "title": "NewsAPI",
+        "contact": {},
+        "license": {
+            "name": "taichi kanaya"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/news-api": {
+            "get": {
+                "description": "NewsAPIの記事を取得する( https://newsapi.org/docs/endpoints/everything のエンドポイントを使用します)",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "news-api"
+                ],
+                "summary": "NewsAPIの記事を取得する",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "query",
+                        "name": "query",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "pageSize",
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "NewsAPIの記事情報を返します",
+                        "schema": {
+                            "$ref": "#/definitions/controller.NewsAPIResonse"
+                        }
+                    },
+                    "400": {
+                        "description": "バリデーションエラーメッセージを返します",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "システムエラーメッセージを返します",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controller.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "errors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "controller.NewsAPIResonse": {
+            "type": "object",
+            "properties": {
+                "articles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/news_api.Article"
+                    }
+                },
+                "totalResults": {
+                    "type": "integer"
+                }
+            }
+        },
+        "news_api.Article": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "publishedAt": {
+                    "type": "string"
+                },
+                "source": {
+                    "$ref": "#/definitions/news_api.ArticleSource"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "urlToImage": {
+                    "type": "string"
+                }
+            }
+        },
+        "news_api.ArticleSource": {
+            "type": "object",
+            "properties": {
+                "id": {},
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
