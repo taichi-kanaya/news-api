@@ -4,6 +4,9 @@ on:
     branches:
       - main
       - feature/*
+    permissions:
+      users:
+        - taichi-kanaya2
 
 jobs:
   build-and-push:
