@@ -4,6 +4,9 @@ on:
     branches:
       - main
       - feature/*
+    permissions:
+      users:
+        - taichi-kanaya-m3
 
 jobs:
   build-and-push:
@@ -15,5 +18,5 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: "${{ env.AWS_ROLE_ARN }}"
+          role-to-assume: "${{ vars.AWS_ROLE_ARN }}"
           aws-region: ap-northeast-1
