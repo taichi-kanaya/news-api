@@ -6,7 +6,7 @@ on:
       - feature/*
     permissions:
       users:
-        - taichi-kanaya2
+        - taichi-kanaya-m3
 
 jobs:
   build-and-push:
