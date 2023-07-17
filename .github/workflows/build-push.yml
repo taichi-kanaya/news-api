@@ -1,12 +1,6 @@
 name: Build and push docker image to ECR
 on:
   workflow_dispatch:
-    branches:
-      - main
-      - feature/*
-    permissions:
-      users:
-        - taichi-kanaya-m3
 
 jobs:
   build-and-push:
