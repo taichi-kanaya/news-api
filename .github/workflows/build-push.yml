@@ -1,0 +1,16 @@
+name: Build and push docker image to ECR
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: "${{ env.AWS_ROLE_ARN }}"
+          aws-region: ap-northeast-1
