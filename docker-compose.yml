@@ -1,0 +1,11 @@
+services: 
+  golang:
+    build: .
+    volumes: 
+      - ./:/usr/src/app
+    ports:
+      - "8080:8080"
+    environment:
+      - APP_ENV=${APP_ENV}
+      - NEWS_API_KEY=${NEWS_API_KEY}
+      - SENTRY_DSN=${SENTRY_DSN}
